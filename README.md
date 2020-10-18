@@ -1,1 +1,2 @@
 # QuotesApplication
+Practice app
