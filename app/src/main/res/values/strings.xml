@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">QuotesApplication</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="quote">Quote:</string>
+    <string name="enter_your_quote_here">Enter your quote here</string>
+    <string name="author">Author:</string>
+    <string name="enter_the_name_of_the_author">Enter the name of the author</string>
+    <string name="enter_description_here">Enter description here.</string>
+    <string name="description">Description:</string>
+    <string name="save">Save</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="quote_text">Quote</string>
+    <string name="author_text">Author</string>
+    <string name="description_text">description</string>
+    <string name="clear_all_data">Clear all data</string>
+    <string name="your_quotes_will_appear_here">Your quotes will appear here</string>
+    <string name="edit">Edit</string>
+    <string name="username">Username:</string>
+    <string name="enter_username_here">Enter username here</string>
+    <string name="password">Password</string>
+    <string name="show_password">show password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="dont_have_an_account">Dont have an account?</string>
+    <string name="doesnt_match">Password doesnt match. Please try again</string>
+    <string name="username_doesnt_exist">Username doesnt exist</string>
+    <string name="invalid_password_please_try_again">Invalid Password Please try again</string>
+    <string name="invalid_email_please_try_again">Invalid Email Please try again</string>
+    <string name="enter_your_email_address_here">Enter your email address here</string>
+    <string name="invalid_username_please_try_again">Invalid Username Please try again</string>
+    <string name="gender">Gender</string>
+    <string name="profile">Profile</string>
+    <string name="sign_up_NAV">Sign up</string>
+    <array name="quote_images">
+        <item>@drawable/img_1</item>
+        <item>@drawable/img_2</item>
+        <item>@drawable/img_3</item>
+        <item>@drawable/img_4</item>
+        <item>@drawable/img_5</item>
+        <item>@drawable/img_6</item>
+        <item>@drawable/img_7</item>
+
+    </array>
+</resources>
