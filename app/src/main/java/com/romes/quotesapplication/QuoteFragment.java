@@ -70,6 +70,7 @@ public class QuoteFragment extends Fragment {
 //    public String logInPassword;
     private SharedPreferences pref;
     private BottomNavigationView mMainBottomNavView;
+    private Runnable mOnActivityResultTask;
 
     public QuoteFragment() {
         MainActivity main = (MainActivity)getActivity();
@@ -118,12 +119,12 @@ public class QuoteFragment extends Fragment {
                 getData();
             }
         });
-        editButton = v.findViewById(R.id.edit_button);
         mRecyclerView = v.findViewById(R.id.recyclerView);
+//        editButton = v.findViewById(R.id.edit_button);
         mMainBottomNavView = v.findViewById(R.id.bottom_nav);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mQuoteData = new ArrayList<>();
-        mAdapter = new QuoteAdapter(getContext(), mQuoteData);
+        mAdapter = new QuoteAdapter(context, mQuoteData);
         mRecyclerView.setAdapter(mAdapter);
         mQuoteViewModel = ViewModelProviders.of(this).get(QuoteVIewModel.class);
         mQuoteViewModel.getAllQuotes().observe(getViewLifecycleOwner(), new Observer<List<Quote>>() {
@@ -208,4 +209,33 @@ public class QuoteFragment extends Fragment {
 
 
     }
-}
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+                if (requestCode == upREQUEST_CODE) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        String quote = data.getStringExtra(UpdateQuote.upQuote);
+                        String author = data.getStringExtra(UpdateQuote.upAuthor);
+                        String description = data.getStringExtra(UpdateQuote.upDescription);
+                        int selectedQuoteID = data.getIntExtra(UpdateQuote.upID, 0);
+                        Quote updateQuote = new Quote(selectedQuoteID, quote, author, description);
+//                if(updateQuote!=null){
+                        mQuoteViewModel.updateQuote(updateQuote);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+                if (requestCode == REQUEST_CODE) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        String quote = data.getStringExtra(AddQuoteActivity.Quote);
+                        String author = data.getStringExtra(AddQuoteActivity.Author);
+                        String description = data.getStringExtra(AddQuoteActivity.Description);
+                        Quote newQuote = new Quote(quote, author, description);
+                        mQuoteViewModel.insert(newQuote);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+
+        };
+    }
+

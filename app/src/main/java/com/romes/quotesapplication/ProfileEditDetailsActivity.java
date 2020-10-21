@@ -57,6 +57,7 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
         mInvalidUsername = findViewById(R.id.invalidUsernameTextProfileEdit);
         mShowPasswordOld = findViewById(R.id.showPasswordCheckBoxProfileEdit);
         mShowPasswordNew = findViewById(R.id.showNewPasswordCheckBox);
+        mInvalidPassword.setVisibility(View.INVISIBLE);
         EditButton = findViewById(R.id.signUpButtonEditProfile);
         Intent intent = getIntent();
         currentUsername=intent.getStringExtra(ProfileActivity.profileEditUsername);
@@ -96,6 +97,9 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
                                                        mInvalidPassword.setVisibility(View.INVISIBLE);
                                                    } else {
                                                        mInvalidPassword.setVisibility(View.VISIBLE);
+                                                       if(mOldPassword.getText().toString().isEmpty()){
+                                                           mInvalidPassword.setVisibility(View.INVISIBLE);
+                                                       }
                                                    }
                                                    if (mEmail.getText().toString().trim().matches(emailPattern)) {
                                                        mInvalidEmail.setVisibility(View.INVISIBLE);
@@ -108,7 +112,7 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
                                                        email = mEmail.getText().toString();
                                                        oldPassword = mOldPassword.getText().toString();
                                                        newPassword = mNewPassword.getText().toString();
-                                                       User user = new User(selectedUserID, username, email, newPassword, gender);
+                                                       User user = new User(selectedUserID, username, newPassword, email, gender);
                                                        mUserViewModelEdit.update(user);
                                                        Intent goBackIntent = new Intent();
                                                        goBackIntent.putExtra(editedUsername, username);

@@ -24,7 +24,7 @@
     <string name="clear_all_data">Clear all data</string>
     <string name="your_quotes_will_appear_here">Your quotes will appear here</string>
     <string name="edit">Edit</string>
-    <string name="username">Username:</string>
+    <string name="username1">Username:</string>
     <string name="enter_username_here">Enter username here</string>
     <string name="password">Password</string>
     <string name="show_password">show password</string>
@@ -40,6 +40,20 @@
     <string name="gender">Gender</string>
     <string name="profile">Profile</string>
     <string name="sign_up_NAV">Sign up</string>
+    <string name="password_profile">Password:</string>
+    <string name="password_asterisk">********</string>
+    <string name="edit_image">Edit Image</string>
+    <string name="guest">Guest</string>
+    <string name="email">Email:</string>
+    <string name="abc_gmail_com">abc@gmail.com</string>
+    <string name="gender1">Gender:</string>
+    <string name="male">Male</string>
+    <string name="password1">Password:</string>
+    <string name="pwordasterisk">********</string>
+    <string name="username">Username</string>
+    <string name="gender_profile">Gender</string>
+    <string name="profileimage">profileImage</string>
+    <string name="edit_details">Edit Details</string>
     <array name="quote_images">
         <item>@drawable/img_1</item>
         <item>@drawable/img_2</item>

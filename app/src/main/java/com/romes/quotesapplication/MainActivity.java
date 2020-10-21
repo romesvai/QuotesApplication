@@ -1,6 +1,7 @@
 package com.romes.quotesapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -52,14 +53,15 @@ public class MainActivity extends AppCompatActivity {
     public static final String popAuthor = "com.romes.example.Author";
     public static final String popDescription = "com.romes.example.Description";
     public static final String id = "com.romes.example.id";
-    public static final String loginUsername="com.romes.example.USERNAME";
+    public static final String loginUsername = "com.romes.example.USERNAME";
     private UserViewModel mUserViewModel;
     private MenuItem prevMenuItem;
     private ViewPager viewPager;
-//    public String logInUsername;
+    //    public String logInUsername;
 //    public String logInPassword;
     SharedPreferences pref;
     BottomNavigationView mMainBottomNavView;
+    private Runnable mOnActivityResultTask;
 
 
     @Override
@@ -69,9 +71,30 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mMainBottomNavView=findViewById(R.id.bottom_nav);
-        pref = getSharedPreferences("UserLogin",MODE_PRIVATE);
-        viewPager =findViewById(R.id.viewPager);
+//        mRecyclerView = findViewById(R.id.recyclerView);
+//        mQuoteViewModel = ViewModelProviders.of(this).get(QuoteVIewModel.class);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        mQuoteData = new ArrayList<>();
+//        mAdapter = new QuoteAdapter(this, mQuoteData);
+//        mRecyclerView.setAdapter(mAdapter);
+//        mQuoteViewModel = ViewModelProviders.of(this).get(QuoteVIewModel.class);
+//        mQuoteViewModel.getAllQuotes().observe(this, new Observer<List<Quote>>() {
+//            //  @Override
+//            public void onChanged(List<Quote> quotes) {
+//                mAdapter.setQuotes(quotes);
+//            }
+//        });
+//        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+//        mUserViewModel.getCurrentUser().observe(this, new Observer<User>() {
+//            @Override
+//            public void onChanged(User user) {
+//                //  mUserViewModel.update(user);
+//            }
+//        });
+        mMainBottomNavView = findViewById(R.id.bottom_nav);
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        pref = getSharedPreferences("UserLogin", MODE_PRIVATE);
+        viewPager = findViewById(R.id.viewPager);
         mMainBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -82,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 if (id == R.id.QuoteNAV) {
-                   viewPager.setCurrentItem(0);
-                   return true;
+                    viewPager.setCurrentItem(0);
+                    return true;
                 }
 
-                    return false;
+                return false;
 
             }
 
@@ -120,12 +143,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-            return true;
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
 
     @Override
@@ -148,21 +171,19 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (id == R.id.login) {
-            if(item.getTitle().equals(pref.getString("username","error"))){
+            if (item.getTitle().equals(pref.getString("username", "error"))) {
                 Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
-                profileIntent.putExtra(loginUsername,pref.getString("username","error"));
+                profileIntent.putExtra(loginUsername, pref.getString("username", "error"));
                 startActivity(profileIntent);
 
+            } else {
+                Intent logInIntent = new Intent(MainActivity.this, UserLoginActivity.class);
+                startActivity(logInIntent);
             }
-            else {
-               Intent logInIntent = new Intent(MainActivity.this,UserLoginActivity.class);
-               startActivity(logInIntent);
-            }
-
 
 
         }
-        if(id==R.id.logout){
+        if (id == R.id.logout) {
             SharedPreferences.Editor editor = pref.edit();
             editor.clear();
             editor.commit();
@@ -178,15 +199,13 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("RestrictedApi")
     @Override
     protected boolean onPrepareOptionsPanel(@Nullable View view, @NonNull Menu menu) {
-        if(pref.contains("username")){
-            Toast.makeText(MainActivity.this,"You are logged in ",Toast.LENGTH_LONG).show();
+        if (pref.contains("username")) {
             MenuItem Menu = menu.findItem(R.id.login);
-            Menu.setTitle(pref.getString("username","error"));
+            Menu.setTitle(pref.getString("username", "error"));
             MenuItem logOut = menu.findItem(R.id.logout);
             logOut.setEnabled(true);
 
-        }
-        else{
+        } else {
             MenuItem Menu = menu.findItem(R.id.login);
             Menu.setTitle("LOG IN");
             MenuItem logOut = menu.findItem(R.id.logout);
@@ -194,10 +213,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsPanel(view, menu);
     }
-    private void setUpViewPager(ViewPager viewPager){
+
+    private void setUpViewPager(ViewPager viewPager) {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-       QuoteFragment quoteFragment =new QuoteFragment();
-       ProfileFragment profileFragment =new ProfileFragment();
+        QuoteFragment quoteFragment = new QuoteFragment();
+        ProfileFragment profileFragment = new ProfileFragment();
         adapter.addFragment(quoteFragment);
         adapter.addFragment(profileFragment);
         viewPager.setAdapter(adapter);
@@ -205,36 +225,76 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
 
         //   Random r = new Random();
         // final int i1 = r.nextInt(7);
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                String quote = data.getStringExtra(AddQuoteActivity.Quote);
-                String author = data.getStringExtra(AddQuoteActivity.Author);
-                String description = data.getStringExtra(AddQuoteActivity.Description);
-                Quote newQuote = new Quote(quote, author, description);
-                mQuoteViewModel.insert(newQuote);
-                mAdapter.notifyDataSetChanged();
-            }
-        }
-        if (requestCode == upREQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                String quote = data.getStringExtra(UpdateQuote.upQuote);
-                String author = data.getStringExtra(UpdateQuote.upAuthor);
-                String description = data.getStringExtra(UpdateQuote.upDescription);
-                int selectedQuoteID = data.getIntExtra(UpdateQuote.upID, 0);
-                Quote updateQuote = new Quote(selectedQuoteID, quote, author, description);
-//                if(updateQuote!=null){
-                mQuoteViewModel.updateQuote(updateQuote);
-                mAdapter.notifyDataSetChanged();
-            }
-        }
+
+
+//        mOnActivityResultTask = new Runnable() {
+//            @Override
+//            public void run() {
+//                if (requestCode == upREQUEST_CODE) {
+//                    if (resultCode == RESULT_OK) {
+//                        String quote = data.getStringExtra(UpdateQuote.upQuote);
+//                        String author = data.getStringExtra(UpdateQuote.upAuthor);
+//                        String description = data.getStringExtra(UpdateQuote.upDescription);
+//                        int selectedQuoteID = data.getIntExtra(UpdateQuote.upID, 0);
+//                        Quote updateQuote = new Quote(selectedQuoteID, quote, author, description);
+////                if(updateQuote!=null){
+//                        mQuoteViewModel.updateQuote(updateQuote);
+//                        mAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//                if (requestCode == REQUEST_CODE) {
+//                    if (resultCode == RESULT_OK) {
+//                        String quote = data.getStringExtra(AddQuoteActivity.Quote);
+//                        String author = data.getStringExtra(AddQuoteActivity.Author);
+//                        String description = data.getStringExtra(AddQuoteActivity.Description);
+//                        Quote newQuote = new Quote(quote, author, description);
+//                        mQuoteViewModel.insert(newQuote);
+//                        mAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//                if (requestCode == userREQUEST_CODE) {
+//                    if (resultCode == RESULT_OK) {
+//                        String username = data.getStringExtra(UserSignUpActivity.userUsername);
+//                        String email = data.getStringExtra(UserSignUpActivity.userEmail);
+//                        String password = data.getStringExtra(UserSignUpActivity.userPassword);
+//                        String gender = data.getStringExtra(UserSignUpActivity.userGender);
+//                        User user = new User(username,password,email,gender);
+//                        mUserViewModel.insert(user);
+//
+//
+//                    }
+//                }
+//
+//            }
+//        };
+//        if (requestCode == REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                String quote = data.getStringExtra(AddQuoteActivity.Quote);
+//                String author = data.getStringExtra(AddQuoteActivity.Author);
+//                String description = data.getStringExtra(AddQuoteActivity.Description);
+//                Quote newQuote = new Quote(quote, author, description);
+//                mQuoteViewModel.insert(newQuote);
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        }
+//        if (requestCode == upREQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                String quote = data.getStringExtra(UpdateQuote.upQuote);
+//                String author = data.getStringExtra(UpdateQuote.upAuthor);
+//                String description = data.getStringExtra(UpdateQuote.upDescription);
+//                int selectedQuoteID = data.getIntExtra(UpdateQuote.upID, 0);
+//                Quote updateQuote = new Quote(selectedQuoteID, quote, author, description);
+////                if(updateQuote!=null){
+//                mQuoteViewModel.updateQuote(updateQuote);
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        }
 
         if (requestCode == userREQUEST_CODE) {
             if (resultCode == RESULT_OK) {
@@ -242,20 +302,27 @@ public class MainActivity extends AppCompatActivity {
                 String email = data.getStringExtra(UserSignUpActivity.userEmail);
                 String password = data.getStringExtra(UserSignUpActivity.userPassword);
                 String gender = data.getStringExtra(UserSignUpActivity.userGender);
-                User user = new User(username,password,email,gender);
+                User user = new User(username, password, email, gender);
                 mUserViewModel.insert(user);
 
 
             }
         }
-
-
-
-
-
-
     }
+
+
+//    @Override
+//    protected void onPostResume() {
+//        super.onPostResume();
+//            if (mOnActivityResultTask != null) {
+//                mOnActivityResultTask.run();
+//                mOnActivityResultTask = null;
+//            }
+//
+//        }
+//    }
 }
+
 
 
 

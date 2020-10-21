@@ -35,19 +35,18 @@ So, we are leaving the template code in. -->
     </com.google.android.material.appbar.AppBarLayout>
 
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="37dp"
         android:background="?attr/colorPrimary"
         android:theme="@style/AppToolbar"
-        app:menu="@menu/menu_main"/>
+        app:menu="@menu/menu_main" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="474dp"
+        android:layout_height="582dp"
         android:layout_gravity="center" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

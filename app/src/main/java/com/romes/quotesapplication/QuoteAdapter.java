@@ -1,6 +1,7 @@
 package com.romes.quotesapplication;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -49,20 +51,20 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Quote currentQuote = mQuoteData.get(position);
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Quote prevQuote = mQuoteData.get(position);
-                int selectedQuoteID = prevQuote.getId();
-                Intent updateIntent = new Intent(mContext,UpdateQuote.class);
-                   updateIntent.putExtra(popQuote,prevQuote.getQuote());
-                    updateIntent.putExtra(popAuthor,prevQuote.getAuthor());
-                   updateIntent.putExtra(popDescription,prevQuote.getDescription());
-                  updateIntent.putExtra(id,selectedQuoteID);
-                ((Activity) mContext).startActivityForResult(updateIntent,upRequestCode);
-               
-            }
-        });
+//        holder.editButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Quote prevQuote = mQuoteData.get(position);
+//                int selectedQuoteID = prevQuote.getId();
+//                Intent updateIntent = new Intent(mContext,UpdateQuote.class);
+//                   updateIntent.putExtra(popQuote,prevQuote.getQuote());
+//                    updateIntent.putExtra(popAuthor,prevQuote.getAuthor());
+//                   updateIntent.putExtra(popDescription,prevQuote.getDescription());
+//                  updateIntent.putExtra(id,selectedQuoteID);
+//                ((FragmentActivity)mContext).startActivityForResult(updateIntent,upRequestCode);
+//
+//            }
+//        });
 
         holder.bindTo(currentQuote);
 
@@ -94,7 +96,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder>{
             mQuoteText = itemView.findViewById(R.id.Quote);
             mAuthorText = itemView.findViewById(R.id.Author);
             mDescriptionText = itemView.findViewById(R.id.Description);
-            editButton = itemView.findViewById(R.id.edit_button);
+//            editButton = itemView.findViewById(R.id.edit_button);
 
 
         }

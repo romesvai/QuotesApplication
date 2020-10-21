@@ -13,17 +13,18 @@
         android:layout_width="267dp"
         android:layout_height="255dp"
         android:layout_gravity="center_horizontal"
-        app:srcCompat="@drawable/profileicon" />
+        app:srcCompat="@drawable/picon"
+        android:contentDescription="@string/profileimage"/>
 
     <Button
         android:id="@+id/edit_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:backgroundTint="#1D34B3"
-        android:text="Edit Image"
+        android:text="@string/edit_image"
         android:textColor="@color/white"
-        android:onClick="editImageFunction"/>
+        />
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -33,7 +34,7 @@
         android:id="@+id/name_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username:"
+        android:text="@string/username1"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
-        android:text="Guest"
+        android:text="@string/guest"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 </LinearLayout>
     <LinearLayout
@@ -54,7 +55,7 @@
             android:id="@+id/email_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email:        "
+            android:text="@string/email"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
 
@@ -63,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="56dp"
-            android:text="abc@gmail.com"
+            android:text="@string/abc_gmail_com"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     </LinearLayout>
     <LinearLayout
@@ -77,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="Gender:     "
+            android:text="@string/gender1"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -85,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="56dp"
-            android:text="Male"
+            android:text="@string/male"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
     </LinearLayout>
     <LinearLayout
@@ -98,7 +99,7 @@
             android:id="@+id/password_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password: "
+            android:text="@string/password1"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -106,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="56dp"
-            android:text="********"
+            android:text="@string/pwordasterisk"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
     </LinearLayout>
 
@@ -117,7 +118,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:backgroundTint="#142EBF"
-        android:text="Edit Details"
+        android:text="@string/edit_details"
         android:textColor="#FFFFFF"
         android:onClick="editProfileDetailsFunction"/>
 
